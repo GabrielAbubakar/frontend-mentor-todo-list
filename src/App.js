@@ -4,9 +4,9 @@ import './App.css'
 const App = () => {
 
     const [input, setInput] = useState("")
-    const [todos, setTodos] =
-        useState(JSON.parse(localStorage.getItem('todos')) !== [] ? JSON.parse(localStorage.getItem('todos')) : [])
-    const [displayedArr, setDisplayedArr] = useState([...todos])
+    const [todos, setTodos] = useState(
+        JSON.parse(localStorage.getItem('todos')) !== null ? JSON.parse(localStorage.getItem('todos')) : [])
+    const [displayedArr, setDisplayedArr] = useState(todos)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -28,6 +28,12 @@ const App = () => {
 
     }
 
+    const deleteOne = (index) => {
+        const newTodos = [...todos]
+        newTodos.splice(index, 1)
+        setTodos(newTodos)
+    }
+
     const filterActive = () => {
         const filtered = [...todos]
         setDisplayedArr(filtered.filter(item => item.isCompleted === false))
@@ -47,12 +53,12 @@ const App = () => {
         setTodos(filtered.filter(item => item.isCompleted === false))
     }
 
-
-
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
         setDisplayedArr(todos)
     }, [todos])
+
+
 
 
     return (
@@ -69,14 +75,14 @@ const App = () => {
 
                 <ul>
                     {
-                        displayedArr.map((todo, index) => (
+                        displayedArr && displayedArr.map((todo, index) => (
                             <li key={index}>
                                 <button
                                     className={todo.isCompleted ? 'completed-item' : 'uncompleted-item'}
                                     onClick={() => toggleComplete(index)}>
                                 </button>
                                 <p className={todo.isCompleted ? 'line-through' : ''}>{todo.name}</p>
-                                <button className='delete-item'>
+                                <button className='delete-item' onClick={() => deleteOne(index)}>
                                     <svg width={18} height={18}>
                                         <path
                                             fill="#494C6B"
@@ -93,7 +99,7 @@ const App = () => {
 
                 <div className='status-bar'>
                     <p>
-                        {todos.filter(item => item.isCompleted === false).length} items left
+                        {todos ? todos.filter(item => item.isCompleted === false).length : 0} items left
                     </p>
                     <div className="status-options">
                         <button onClick={filterAll}>All</button>
