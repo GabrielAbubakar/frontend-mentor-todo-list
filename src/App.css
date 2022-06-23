@@ -33,6 +33,10 @@ body {
     color: var(--color-grayish-blue);
 }
 
+.mobileText {
+    display: none;
+}
+
 
 .background-img {
     background-image: url(../public/assets/images/bg-desktop-dark.jpg);
@@ -45,6 +49,8 @@ body {
     left: 0;
     z-index: -1;
 }
+
+
 
 h1 {
     color: var(--color-white);
@@ -153,3 +159,23 @@ ul li:hover .delete-item {
 }
 
 .status-bar button {}
+
+
+@media (max-width: 675px) {
+    .background-img {
+        display: none;
+    }
+
+    .container {
+        display: none;
+    }
+
+    .mobileText {
+        display: block;
+        text-align: center;
+    }
+
+    body {
+        align-items: center;
+    }
+}

@@ -63,6 +63,7 @@ const App = () => {
 
     return (
         <div>
+            <p className='mobileText'>This web app is not available for mobile/tablet screens. <br /> Please switch to a desktop to use</p>
             <div className='background-img'>
 
             </div>
